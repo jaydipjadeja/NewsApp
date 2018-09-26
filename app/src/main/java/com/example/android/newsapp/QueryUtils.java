@@ -95,7 +95,7 @@ public class QueryUtils {
                 String sectionName = currentNews.getString("author");//sectionName
 
                 // Extract the value for the key called "time"
-                String  time = currentNews.getString("pubDate");//webPublicationDate
+                String time = currentNews.getString("pubDate");//webPublicationDate
 
                 // Extract the value for the key called "url"
                 String url = currentNews.getString("link");//webUrl

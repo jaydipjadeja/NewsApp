@@ -1,4 +1,4 @@
-package com.example.android.newsapp;
+package com.example.android.newsapp.Fragment;
 
 
 import android.app.LoaderManager;
@@ -21,6 +21,12 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.android.newsapp.Config.PublicConstant;
+import com.example.android.newsapp.News;
+import com.example.android.newsapp.NewsAdapter;
+import com.example.android.newsapp.NewsLoader;
+import com.example.android.newsapp.R;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,12 +35,7 @@ import java.util.List;
  */
 public class WorldFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<News>> {
 
-
-    /** URL for earthquake data from the USGS dataset */
-    private static final String NEWS_REQUEST_URL = "https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Frss.cbc.ca%2Flineup%2Fworld.xml";
-    // "https://content.guardianapis.com/search?show-fields=thumbnail&api-key=918af37e-e246-40f8-adec-83f47f40f1d2";
-
-    private static final int NEWS_LOADER_ID = 1;
+    private static final int NEWS_LOADER_ID = 2;
 
     /** Adapter for the list of earthquakes */
     private NewsAdapter mAdapter;
@@ -45,6 +46,8 @@ public class WorldFragment extends Fragment implements LoaderManager.LoaderCallb
     /** Progressbar that is displayed when the list is loading */
     private ProgressBar mProgressBar ;
 
+    private View rootView;
+
     public WorldFragment() {
         // Required empty public constructor
     }
@@ -53,7 +56,7 @@ public class WorldFragment extends Fragment implements LoaderManager.LoaderCallb
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.list_main, container, false);
+        rootView = inflater.inflate(R.layout.list_main, container, false);
 
         // Find a reference to the {@link ListView} in the layout
         ListView newsListView = (ListView) rootView.findViewById(R.id.list);
@@ -87,31 +90,31 @@ public class WorldFragment extends Fragment implements LoaderManager.LoaderCallb
             }
         });
 
-//        // Get a reference to the ConnectivityManager to check state of network connectivity
-//        ConnectivityManager connMgr = (ConnectivityManager)
-//                getSystemService(Context.CONNECTIVITY_SERVICE);
-//
-//        // Get details on the currently active default data network
-//        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-//
-//        // If there is a network connection, fetch data
-//        if (networkInfo != null && networkInfo.isConnected()) {
-//            // Get a reference to the LoaderManager, in order to interact with loaders.
-//            LoaderManager loaderManager = getLoaderManager();
-//
-//            // Initialize the loader. Pass in the int ID constant defined above and pass in null for
-//            // the bundle. Pass in this activity for the LoaderCallbacks parameter (which is valid
-//            // because this activity implements the LoaderCallbacks interface).
-//            loaderManager.initLoader(NEWS_LOADER_ID, null, this);
-//        } else {
-//            // Otherwise, display error
-//            // First, hide loading indicator so error message will be visible
-//            View loadingIndicator = rootView.findViewById(R.id.loading_spinner);
-//            loadingIndicator.setVisibility(View.GONE);
-//
-//            // Update empty state with no connection error message
-//            mEmptyStateTextView.setText(R.string.no_internet_connection);
-//        }
+        // Get a reference to the ConnectivityManager to check state of network connectivity
+        ConnectivityManager connMgr = (ConnectivityManager)
+                getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        // Get details on the currently active default data network
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+
+        // If there is a network connection, fetch data
+        if (networkInfo != null && networkInfo.isConnected()) {
+            // Get a reference to the LoaderManager, in order to interact with loaders.
+            LoaderManager loaderManager = getActivity().getLoaderManager();
+
+            // Initialize the loader. Pass in the int ID constant defined above and pass in null for
+            // the bundle. Pass in this activity for the LoaderCallbacks parameter (which is valid
+            // because this activity implements the LoaderCallbacks interface).
+            loaderManager.initLoader(NEWS_LOADER_ID, null, this);
+        } else {
+            // Otherwise, display error
+            // First, hide loading indicator so error message will be visible
+            View loadingIndicator = rootView.findViewById(R.id.loading_spinner);
+            loadingIndicator.setVisibility(View.GONE);
+
+            // Update empty state with no connection error message
+            mEmptyStateTextView.setText(R.string.no_internet_connection);
+        }
 
         return rootView;
     }
@@ -119,13 +122,13 @@ public class WorldFragment extends Fragment implements LoaderManager.LoaderCallb
     @Override
     public Loader onCreateLoader(int i, Bundle bundle) {
 
-        return new NewsLoader(getActivity(), NEWS_REQUEST_URL);
+        return new NewsLoader(getActivity(), PublicConstant.WORLD_URL);
     }
 
     @Override
     public void onLoadFinished(Loader<List<News>> loader, List<News> news) {
 
-        mProgressBar = (ProgressBar) getView().findViewById(R.id.loading_spinner);
+        mProgressBar = (ProgressBar) rootView.findViewById(R.id.loading_spinner);
         mProgressBar.setVisibility(View.GONE);
         // Clear the adapter of previous earthquake data
         mAdapter.clear();

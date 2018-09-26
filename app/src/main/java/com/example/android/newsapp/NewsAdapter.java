@@ -1,9 +1,12 @@
 package com.example.android.newsapp;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,12 +17,16 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class NewsAdapter extends ArrayAdapter<News> {
 
+
+    // Tag for log messages
+    private static final String LOG_TAG = NewsAdapter.class.getName();
 
     private Context mContext;
     /**
@@ -69,17 +76,14 @@ public class NewsAdapter extends ArrayAdapter<News> {
         TextView sectionView = (TextView) listItemView.findViewById(R.id.section);
         sectionView.setText(currentNews.getSection());
 
-
-        // Create a new Date object from the time in milliseconds of the earthquake
-        //Date dateObject = new Date(currentNews.getNewsTime());
+//        // Create a new Date object from the time in milliseconds of the earthquake
+//        Date dateObject = new Date(currentNews.getNewsTime());
 
 
         // Find the TextView with view ID time
         TextView timeView = (TextView) listItemView.findViewById(R.id.time);
-        // Format the time string (i.e. "4:30PM")
-        //String formattedTime = formatTime(dateObject);
         // Display the time of the current earthquake in that TextView
-        timeView.setText(currentNews.getNewsTime());
+        timeView.setText(formatTime(currentNews.getNewsTime()).toString());
 
         ImageView imageView = (ImageView) listItemView.findViewById(R.id.no_image);
         Glide.with(mContext).load(currentNews.getImageUrl()).into(imageView);
@@ -88,11 +92,27 @@ public class NewsAdapter extends ArrayAdapter<News> {
 
     }
 
-    /**
-     * Return the formatted date string (i.e. "4:30 PM") from a Date object.
-     */
-    private String formatTime(Date dateObject) {
-        SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm a");
-        return timeFormat.format(dateObject);
+    private CharSequence formatTime(String time) {
+
+        // Convert the Date object of format {yyyy-MM-dd'T'hh:mm:ss'Z'} into
+        // string format of {yyyy-MM-dd HH:mm:ss}
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat outDate
+                = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        // Parse the date-time string into Date object of format {yyyy-MM-dd HH:mm:ss}
+        // And get the time in milliseconds from Date object
+        long currentTimeInMillis = 0;
+        try {
+            Date currentDateObject = outDate.parse(time);
+            currentTimeInMillis = currentDateObject.getTime();
+        } catch (ParseException e) {
+            Log.e(LOG_TAG, "Error parsing date object : getTimeAndDate() method,e");
+        }
+        // Returns the date-time in more human readable format
+        return DateUtils.getRelativeTimeSpanString(
+                currentTimeInMillis
+                , System.currentTimeMillis()
+                , DateUtils.MINUTE_IN_MILLIS);
     }
+
 }
