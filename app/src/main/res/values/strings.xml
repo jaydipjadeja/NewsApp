@@ -22,7 +22,7 @@
 
     <!-- Label for order by relevance option [CHAR LIMIT=20] -->
     <string name="settings_order_by_default_label">Default</string>
-    <string name="settings_order_by_default1_value" translatable="false">Default</string>
+    <string name="settings_order_by_default1_value" translatable="false">default</string>
 
     <!-- Label for order by pub date option [CHAR LIMIT=20] -->
     <string name="settings_order_by_pubDate_label">Publication Date</string>
@@ -38,7 +38,7 @@
 
     <!-- Strings for preference option showing number of articles oer page -->
     <string name="settings_number_of_articles_label">Number of articles</string>
-    <string name="settings_number_of_articles_key" translatable="false">settings_number_of_articles</string>
+    <string name="settings_number_of_articles_key" translatable="false">count</string>
     <string name="settings_number_of_articles_default_value" translatable="false">10</string>
 
     <string name="setting_menu">Settings</string>

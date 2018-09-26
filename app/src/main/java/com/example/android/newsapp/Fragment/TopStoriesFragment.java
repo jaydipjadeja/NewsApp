@@ -5,10 +5,12 @@ import android.app.LoaderManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -27,6 +29,7 @@ import com.example.android.newsapp.NewsAdapter;
 import com.example.android.newsapp.NewsLoader;
 import com.example.android.newsapp.R;
 import com.example.android.newsapp.SettingsActivity;
+import com.example.android.newsapp.UserPreference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -119,29 +122,31 @@ public class TopStoriesFragment extends Fragment implements LoaderManager.Loader
 
         return rootView;
     }
-//
-//    @Override
-//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-//        super.onCreateOptionsMenu(menu, inflater);
-//        inflater.inflate(R.menu.setting_menu, menu);
-//
-//    }
-
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        int id = item.getItemId();
-//        if (id == R.id.action_settings) {
-//            Intent settingsIntent = new Intent(getActivity(), SettingsActivity.class);
-//            startActivity(settingsIntent);
-//            return true;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
 
     @Override
     public Loader onCreateLoader(int i, Bundle bundle) {
 
-        return new NewsLoader(getActivity(), PublicConstant.TOPSTORIES_URL);
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+        String numOfArticles = sharedPrefs.getString(
+                getString(R.string.settings_number_of_articles_key),
+                getString(R.string.settings_number_of_articles_default_value));
+
+        String orderBy = sharedPrefs.getString(
+                getString(R.string.settings_order_by_key),
+                getString(R.string.settings_order_by_default_value)
+        );
+
+        Uri baseUri = Uri.parse(PublicConstant.TOPSTORIES_URL);
+        Uri.Builder uriBuilder = baseUri.buildUpon();
+
+        if(orderBy == ""){
+            uriBuilder.appendQueryParameter("count", numOfArticles);
+        } else {
+            uriBuilder.appendQueryParameter("order_by", orderBy);
+            uriBuilder.appendQueryParameter("count", numOfArticles);
+        }
+
+        return new NewsLoader(getActivity(), uriBuilder.toString());
     }
 
     @Override
