@@ -52,35 +52,35 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (id) {
 
             case R.id.nav_top_stories:
-                /** When user selects home from navigation drawer, start {@link HomeFragment} */
+                /** When user selects top stories from navigation drawer, start {@link HomeFragment} */
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.content_body, new TopStoriesFragment())
                         .commit();
                 break;
 
             case R.id.nav_world:
-                /** When user selects home from navigation drawer, start {@link HomeFragment} */
+                /** When user selects world from navigation drawer, start {@link HomeFragment} */
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.content_body, new WorldFragment())
                         .commit();
                 break;
 
             case R.id.nav_politics:
-                /** When user selects home from navigation drawer, start {@link HomeFragment} */
+                /** When user selects politics from navigation drawer, start {@link HomeFragment} */
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.content_body, new PoliticsFragment())
                         .commit();
                 break;
 
             case R.id.nav_business:
-                /** When user selects home from navigation drawer, start {@link HomeFragment} */
+                /** When user selects business from navigation drawer, start {@link HomeFragment} */
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.content_body, new BusinessFragment())
                         .commit();
                 break;
 
             case R.id.nav_health:
-                /** When user selects home from navigation drawer, start {@link HomeFragment} */
+                /** When user selects health from navigation drawer, start {@link HomeFragment} */
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.content_body, new HealthFragment())
                         .commit();
@@ -107,8 +107,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             startActivity(settingsIntent);
             return true;
         }
-//        return super.onOptionsItemSelected(item);
-        return false;
+        return super.onOptionsItemSelected(item);
     }
-
 }

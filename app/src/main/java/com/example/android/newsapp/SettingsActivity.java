@@ -1,5 +1,6 @@
 package com.example.android.newsapp;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.ListPreference;
@@ -57,5 +58,13 @@ public class SettingsActivity extends AppCompatActivity {
             String preferenceString = preferences.getString(preference.getKey(), "");
             onPreferenceChange(preference, preferenceString);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, MainActivity.class);
+        finish();
+        startActivity(intent);
+//        super.onBackPressed();
     }
 }
