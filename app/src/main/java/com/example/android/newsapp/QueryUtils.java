@@ -101,14 +101,6 @@ public class QueryUtils {
                 String url = currentNews.getString("link");//webUrl
 
                 String imageUrl = currentNews.getString("thumbnail");
-//                //field object to get imageUrl
-//                String imageUrl = null;
-//                if(currentNews.has("fields")){
-//                    JSONObject fieldObject = currentNews.getJSONObject("fields");
-//                    imageUrl = fieldObject.getString("thumbnail");
-//                }
-
-
 
                 // Create a new {@link Earthquake} object with the magnitude, location, time,
                 // and url from the JSON response.
