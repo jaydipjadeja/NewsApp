@@ -1,10 +1,12 @@
 package com.example.android.newsapp.Fragment;
 
 
-import android.app.LoaderManager;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.support.v4.app.LoaderManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.Loader;
+import android.support.v4.content.Loader;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -19,6 +21,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.android.newsapp.Config.PublicConstant;
+import com.example.android.newsapp.MainActivity;
 import com.example.android.newsapp.News;
 import com.example.android.newsapp.NewsAdapter;
 import com.example.android.newsapp.NewsLoader;
@@ -50,11 +53,19 @@ public class HealthFragment extends Fragment implements LoaderManager.LoaderCall
         // Required empty public constructor
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        getLoaderManager().restartLoader(NEWS_LOADER_ID,null,this);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.list_main, container, false);
+
+        // Set actionbar title
+        ((MainActivity) getActivity()).setActionBarTitle(getString(R.string.nav_health_title));
 
         // Find a reference to the {@link ListView} in the layout
         ListView newsListView = (ListView) rootView.findViewById(R.id.list);
@@ -97,13 +108,11 @@ public class HealthFragment extends Fragment implements LoaderManager.LoaderCall
 
         // If there is a network connection, fetch data
         if (networkInfo != null && networkInfo.isConnected()) {
-            // Get a reference to the LoaderManager, in order to interact with loaders.
-            LoaderManager loaderManager = getActivity().getLoaderManager();
 
             // Initialize the loader. Pass in the int ID constant defined above and pass in null for
             // the bundle. Pass in this activity for the LoaderCallbacks parameter (which is valid
             // because this activity implements the LoaderCallbacks interface).
-            loaderManager.initLoader(NEWS_LOADER_ID, null, this);
+            getLoaderManager().initLoader(NEWS_LOADER_ID, null, this);
         } else {
             // Otherwise, display error
             // First, hide loading indicator so error message will be visible
@@ -118,9 +127,34 @@ public class HealthFragment extends Fragment implements LoaderManager.LoaderCall
     }
 
     @Override
-    public Loader onCreateLoader(int i, Bundle bundle) {
+    public Loader<List<News>> onCreateLoader(int i, Bundle bundle) {
 
-        return new NewsLoader(getActivity(), PublicConstant.HEALTH_URL);
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+        String numOfArticles = sharedPrefs.getString(
+                getString(R.string.settings_number_of_articles_key),
+                getString(R.string.settings_number_of_articles_default_value));
+        String orderDir = sharedPrefs.getString(
+                getString(R.string.settings_order_by_dir_key),
+                getString(R.string.settings_order_by_default_value));
+
+        String orderBy = sharedPrefs.getString(
+                getString(R.string.settings_order_by_key),
+                getString(R.string.settings_order_by_default_value)
+        );
+
+        Uri baseUri = Uri.parse(PublicConstant.HEALTH_URL);
+        Uri.Builder uriBuilder = baseUri.buildUpon();
+
+        if(orderBy == ""){
+            uriBuilder.appendQueryParameter(PublicConstant.ORDER_DIR_KEY,orderDir);
+            uriBuilder.appendQueryParameter(PublicConstant.NUM_OF_ARTICLES, numOfArticles);
+        } else {
+            uriBuilder.appendQueryParameter(PublicConstant.ORDER_BY, orderBy);
+            uriBuilder.appendQueryParameter(PublicConstant.ORDER_DIR_KEY,orderDir);
+            uriBuilder.appendQueryParameter(PublicConstant.NUM_OF_ARTICLES, numOfArticles);
+        }
+
+        return new NewsLoader(getContext(), uriBuilder.toString());
     }
 
     @Override

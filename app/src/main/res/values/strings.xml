@@ -1,11 +1,16 @@
 <resources>
-    <string name="app_name">NewsApp</string>
+    <string name="app_name">CBCNewsApp</string>
 
     <!-- Error message when there is no internet connectivity [CHAR LIMIT=NONE] -->
     <string name="no_internet_connection">No internet connection.</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!--Fragment Titles-->
+    <string name="nav_top_stories_title">Top Stories</string>
+    <string name="nav_world_title">World</string>
+    <string name="nav_politics_title">Politics</string>
+    <string name="nav_health_title">Health</string>
+    <string name="nav_business_title">Business</string>
+
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -22,7 +27,7 @@
 
     <!-- Label for order by relevance option [CHAR LIMIT=20] -->
     <string name="settings_order_by_default_label">Default</string>
-    <string name="settings_order_by_default1_value" translatable="false">default</string>
+    <string name="settings_order_by_default1_value" translatable="false"></string>
 
     <!-- Label for order by pub date option [CHAR LIMIT=20] -->
     <string name="settings_order_by_pubDate_label">Publication Date</string>
@@ -40,6 +45,18 @@
     <string name="settings_number_of_articles_label">Number of articles</string>
     <string name="settings_number_of_articles_key" translatable="false">count</string>
     <string name="settings_number_of_articles_default_value" translatable="false">10</string>
+
+    <!-- Label for order by direction option [CHAR LIMIT=20] -->
+    <string name="settings_order_by_asc_dir_label">Ascending</string>
+    <string name="settings_order_by_asc_dir_value" translatable="false">asc</string>
+
+    <!-- Label for order by direction option [CHAR LIMIT=20] -->
+    <string name="settings_order_by_desc_dir_label">Descending</string>
+    <string name="settings_order_by_desc_dir_value" translatable="false">desc</string>
+
+    <!-- Strings for preference option Order-by [CHAR LIMIT=30] -->
+    <string name="settings_order_by_dir_label">Order direction</string>
+    <string name="settings_order_by_dir_key" translatable="false">order_dir</string>
 
     <string name="setting_menu">Settings</string>
 </resources>

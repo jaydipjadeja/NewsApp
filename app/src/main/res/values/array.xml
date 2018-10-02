@@ -13,4 +13,14 @@
         <item>@string/settings_order_by_title_value</item>
         <item>@string/settings_order_by_author_value</item>
     </string-array>
+
+    <string-array name="settings_order_by_direction_labels">
+        <item>@string/settings_order_by_asc_dir_label</item>
+        <item>@string/settings_order_by_desc_dir_label</item>
+    </string-array>
+
+    <string-array name="settings_order_by_direction_values">
+        <item>@string/settings_order_by_asc_dir_value</item>
+        <item>@string/settings_order_by_desc_dir_value</item>
+    </string-array>
 </resources>

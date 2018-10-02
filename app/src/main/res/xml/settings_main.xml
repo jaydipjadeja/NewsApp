@@ -10,6 +10,13 @@
             android:key="@string/settings_order_by_key"
             android:title="@string/settings_order_by_label" />
 
+        <ListPreference
+            android:defaultValue="@string/settings_order_by_default_value"
+            android:entries="@array/settings_order_by_direction_labels"
+            android:entryValues="@array/settings_order_by_direction_values"
+            android:key="@string/settings_order_by_dir_key"
+            android:title="@string/settings_order_by_dir_label" />
+
         <EditTextPreference
             android:defaultValue="@string/settings_number_of_articles_default_value"
             android:inputType="numberDecimal"

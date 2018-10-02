@@ -14,6 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:scaleType="centerCrop"
+        android:paddingTop="10dp"
         android:src="@drawable/no_image_icon"/>
 
     <TextView

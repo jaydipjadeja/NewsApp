@@ -30,6 +30,10 @@ public class SettingsActivity extends AppCompatActivity {
             Preference orderByPreference = findPreference(getString(R.string.settings_order_by_key));
             bindPreferenceSummaryToValue(orderByPreference);
 
+            /* Find the preference for order by and set the summary */
+            Preference orderDirPreference = findPreference(getString(R.string.settings_order_by_dir_key));
+            bindPreferenceSummaryToValue(orderDirPreference);
+
             /* Find preference for number of articles per page and set the summary */
             Preference numberOfArticlesPreference = findPreference(getString(R.string.settings_number_of_articles_key));
             bindPreferenceSummaryToValue(numberOfArticlesPreference);
@@ -58,13 +62,5 @@ public class SettingsActivity extends AppCompatActivity {
             String preferenceString = preferences.getString(preference.getKey(), "");
             onPreferenceChange(preference, preferenceString);
         }
-    }
-
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(this, MainActivity.class);
-        finish();
-        startActivity(intent);
-//        super.onBackPressed();
     }
 }

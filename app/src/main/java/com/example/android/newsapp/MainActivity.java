@@ -109,4 +109,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         return super.onOptionsItemSelected(item);
     }
+
+    // Change the title of action bar as per fragment
+    public void setActionBarTitle(String title){
+        getSupportActionBar().setTitle(title);
+    }
 }

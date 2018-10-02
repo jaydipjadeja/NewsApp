@@ -3,4 +3,7 @@
     <color name="colorPrimary">#f44336</color>
     <color name="colorPrimaryDark">#f44336</color>
     <color name="colorAccent">#FF4081</color>
+
+    <!-- Navigation view item default color -->
+    <color name="navigation_list_color">#454545</color>
 </resources>

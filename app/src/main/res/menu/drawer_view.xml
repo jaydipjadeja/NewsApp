@@ -3,18 +3,18 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_top_stories"
-            android:title="Top Stories" />
+            android:title="@string/nav_top_stories_title" />
         <item
             android:id="@+id/nav_world"
-            android:title="World" />
+            android:title="@string/nav_world_title" />
         <item
             android:id="@+id/nav_politics"
-            android:title="Politics" />
+            android:title="@string/nav_politics_title" />
         <item
             android:id="@+id/nav_business"
-            android:title="Business" />
+            android:title="@string/nav_business_title" />
         <item
             android:id="@+id/nav_health"
-            android:title="Health" />
+            android:title="@string/nav_health_title" />
     </group>
 </menu>
